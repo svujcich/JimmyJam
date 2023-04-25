@@ -3,7 +3,7 @@ import time
 
 
 # yes or no
-def validate_choice(choice):
+def validate_choice_yn(choice):
     while True:
         # choice = input("> ").upper().strip()
         if (choice == "Y") or (choice == "N"):
@@ -12,17 +12,50 @@ def validate_choice(choice):
         if (choice != "Y") or (choice != "N"):
             print("Try again with a valid selection! (Y / N)")
             choice = input("> ").upper().strip()
+            
+def calidate_choice_abcd(choice):
+    if (choice == "A") or (choice == "B") or (choice == "C") or (choice == "D"):
+        return choice
+    else:
+        print("Try again with a valid selection! (Y / N)")
+        choice = input("> ").upper().strip()
+        
+def guess_again(guess, wrong_guesses, correct_guesses):        
+    if guess in wrong_guesses or guess in correct_guesses:
+        print(f"you have already guessed {guess}. Try Again!")
+        guess = input("> ")
+        return guess
 
 
-# assign an _ for each letter in the keyword
-def reassign_letters(keyword, correct_letters):
-    i = 0
+# create place holders for letters
+letter_1 = ""
+letter_2 = ""
+letter_3 = ""
+letter_4 = ""
+letter_5 = ""
+letter_6 = ""
+letter_7 = ""
+letter_8 = ""
+letter_9 = ""
+letter_10 = ""
+letter_11 = ""
+letter_12 = ""
 
-    num_letters = len(keyword)
-    while i < num_letters:
-        correct_letters[i] = "_ "
-        i += 1
-        break
+# store letters in list to access using loop
+correct_in_order = [
+    letter_1,
+    letter_2,
+    letter_3,
+    letter_4,
+    letter_5,
+    letter_6,
+    letter_7,
+    letter_8,
+    letter_9,
+    letter_10,
+    letter_11,
+    letter_12,
+]
 
 
 def guess_progress(correct_in_order):
@@ -40,7 +73,7 @@ def display_gallows(wrong_guesses, keyword):
         print("|/")
         print("|")
         print("|")
-        print("_ " * len(keyword))
+        # print("_ " * len(keyword))
 
     elif guess_count == 1:
         print("---------")
@@ -48,7 +81,7 @@ def display_gallows(wrong_guesses, keyword):
         print("|/")
         print("|")
         print("|")
-        print("_ " * len(keyword))
+        # print("_ " * len(keyword))
 
     elif guess_count == 2:
         print("---------")
@@ -56,7 +89,7 @@ def display_gallows(wrong_guesses, keyword):
         print("|/      |")
         print("|")
         print("|")
-        print("_ " * len(keyword))
+        # print("_ " * len(keyword))
 
     elif guess_count == 3:
         print("---------")
@@ -64,7 +97,7 @@ def display_gallows(wrong_guesses, keyword):
         print("|/      |\\")
         print("|")
         print("|")
-        print("_ " * len(keyword))
+        # print("_ " * len(keyword))
 
     elif guess_count == 4:
         print("---------")
@@ -72,7 +105,7 @@ def display_gallows(wrong_guesses, keyword):
         print("|/     /|\\")
         print("|")
         print("|")
-        print("_ " * len(keyword))
+        # print("_ " * len(keyword))
 
     elif guess_count == 5:
         print("---------")
@@ -80,7 +113,7 @@ def display_gallows(wrong_guesses, keyword):
         print("|/     /|\\")
         print("|        \\")
         print("|")
-        print("_ " * len(keyword))
+        # print("_ " * len(keyword))
 
     elif guess_count == 6:
         print("---------")
@@ -88,27 +121,38 @@ def display_gallows(wrong_guesses, keyword):
         print("|/     /|\\")
         print("|      / \\")
         print("|")
-        print("_ " * len(keyword))
+        # print("_ " * len(keyword))
+        
+        
+# guess = "K"
+# keyword = "ALPHABEAT"
+# correct_guesses = ["B"]
+# wrong_guesses = ["X", "M"]
+
+# def add_letters(guess, keyword, correct_guesses, wrong_guesses):
+#     # position = []
+#     if guess in keyword:
+#         for i, letter in enumerate(keyword):
+#             if letter == guess:
+#                 # print(i, letter)
+#                 correct_in_order[i] = f"{guess} "
+                
+#                 if letter not in correct_guesses:
+#                     correct_guesses.append(letter)
+                    
+#     else:
+#         print(f"{guess} is NOT in {keyword}")
+#         if guess not in wrong_guesses:
+#             wrong_guesses.append(guess)
 
 
-def add_letters(guess):
-    if guess in keyword:
-        for i, letter in enumerate(keyword):
-            if letter == guess:
-
-                if letter not in correct_guesses:
-                    correct_guesses.append(letter)
-                    return (i, letter)
-    else:
-        print(f"{guess} is NOT in {keyword}")
-        wrong_guesses.append(guess)
-
-        answer = add_letters(guess)
+# verdict = add_letters(guess, keyword, correct_guesses, wrong_guesses)
+# print(verdict)
+# print(correct_guesses)
+# print(wrong_guesses)
 
 
-# test = ["this", "that"]
 
-# print(test[0] + test[1])
 
 #------------------
 
@@ -127,7 +171,7 @@ def jimmyjam():
         print("Are you willing to help Jimmy? (Y / N)")
         choice = input("> ").upper().strip()
         # funnel choice through function to catch incorrect entries
-        choice = validate_choice(choice)
+        choice = validate_choice_yn(choice)
 
         if choice == "N":
             break
@@ -164,6 +208,7 @@ def jimmyjam():
         # GAME SETUP
         correct_guesses = []
         wrong_guesses = []
+        letter_choices = ["A", "B", "C", "D", "E", "F", "G","H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 
         # pick a random word for hangman
         keywords = [
@@ -201,16 +246,21 @@ def jimmyjam():
             letter_11,
             letter_12,
         ]
-        # prints hangman board
+        
+        # assign an _ for each letter in the keyword
+        for i, letter in enumerate(keyword):
+            correct_in_order[i] = "_ "
+        
+        # board setup
         display_gallows(wrong_guesses, keyword)
-
-        # assigns an _ for each letter in the KEYWORD
-        reassign_letters(keyword, correct_in_order)
-
-        # shows letters that have been guessed correctly in the KEYWORD
-        # guess_progress(correct_in_order)
+        guess_progress(correct_in_order)
+        # print(keyword)
 
         while True:
+            # break loop if jimmy is completely on the board
+            if len(wrong_guesses) == 6:
+                break
+            
             print()
             print("What would you like to do?")
             print("[A] Guess a letter")
@@ -220,8 +270,49 @@ def jimmyjam():
             user_choice = input("> ").upper().strip()
 
             if user_choice == "A":
-                print("You chose A")
-                print()
+                print("What letter do you guess?")
+                guess = input("> ").upper().strip()
+                
+                while True:
+                    # check i letter is in key word
+
+                    if len(guess) > 1:
+                        print(f"Too many characters, Try Again!")
+                        guess = input("> ").upper().strip
+                        
+                    elif guess not in letter_choices:
+                        print("Not a valid entry, Try again!")
+                        guess = input("> ").upper().strip
+                                     
+                    elif guess in wrong_guesses or guess in correct_guesses:
+                        print(f"you have already guessed {guess}. Try Again!")
+                        guess = input("> ")
+                                                                      
+                    elif guess in keyword:
+                        print()
+
+                        for i, letter in enumerate(keyword):
+                            if letter == guess:
+                                # print(i, letter)
+                                correct_in_order[i] = f"{guess} "
+                                
+                                if letter not in correct_guesses:
+                                    correct_guesses.append(letter)
+                        print("Correct!")                    
+                        display_gallows(wrong_guesses, keyword)
+                        guess_progress(correct_in_order)
+                        break   
+                                    
+                    else:
+                        print()
+                        if guess not in wrong_guesses:
+                            wrong_guesses.append(guess)
+                        print("Incorrect...")
+                        display_gallows(wrong_guesses, keyword)
+                        guess_progress(correct_in_order)
+                        break
+                                        
+                # print()
 
             elif user_choice == "B":
                 print("You chose B")
@@ -234,7 +325,7 @@ def jimmyjam():
             elif user_choice == "D":
                 print("Are you sure you want to exit? (Y / N)")
                 choice = input("> ").upper().strip()
-                choice = validate_choice(choice)
+                choice = validate_choice_yn(choice)
                 print()
 
                 # ends game - second while loop
@@ -251,6 +342,7 @@ def jimmyjam():
 
 jimmyjam()
 
+print()
 print("GAME OVER")
 
         
