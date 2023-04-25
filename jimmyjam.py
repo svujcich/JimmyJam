@@ -48,8 +48,7 @@ def guess_progress(correct_in_order):
      correct_in_order[8], correct_in_order[9], correct_in_order[10], correct_in_order[11])
 
 
-def display_gallows(wrong_guesses, keyword):
-    guess_count = len(wrong_guesses)
+def display_gallows(guess_count):
     if guess_count == 0:
         print("---------")
         print("| /")
@@ -181,6 +180,7 @@ def jimmyjam():
         time.sleep(2)
     
         # GAME SETUP
+        guess_count = 0
         correct_guesses = []
         wrong_guesses = []
         letter_choices = [
@@ -230,7 +230,7 @@ def jimmyjam():
             correct_in_order[i] = "_ "
     
         # board setup
-        display_gallows(wrong_guesses, keyword)
+        display_gallows(guess_count)
         guess_progress(correct_in_order)
         # print(keyword)
     
@@ -272,7 +272,7 @@ def jimmyjam():
                                 if letter not in correct_guesses:
                                     correct_guesses.append(letter)
                         print("Correct!")
-                        display_gallows(wrong_guesses, keyword)
+                        display_gallows(guess_count)
                         guess_progress(correct_in_order)
                         break
     
@@ -281,7 +281,8 @@ def jimmyjam():
                         if guess not in wrong_guesses:
                             wrong_guesses.append(guess)
                         print("Incorrect...")
-                        display_gallows(wrong_guesses, keyword)
+                        guess_count += 1
+                        display_gallows(guess_count)
                         guess_progress(correct_in_order)
                         break
     
@@ -289,8 +290,16 @@ def jimmyjam():
                 
             # guess the word
             elif user_choice == "B":
-                print("You chose B")
-                print()
+                print("What do you think the word is?")
+                word_guess = input("> ").upper().strip()
+                
+                if word_guess == keyword:
+                    break
+                else:
+                    print("Sorry, that isn't correct")
+                    guess_count += 1
+                    display_gallows(guess_count)
+                    guess_progress(correct_in_order)
                 
             # see incorrect guesses
             elif user_choice == "C":
@@ -303,7 +312,8 @@ def jimmyjam():
                 choice = validate_choice_yn(choice)
                 print()
     
-                # ends game - second while loop
+                # ends game - second while loopy
+
                 if choice == "Y":
                     break
     
@@ -312,11 +322,11 @@ def jimmyjam():
                 print()
     
         # end game - first while loop
-        if len(wrong_guesses) == 6:
+        if guess_count == 6:
             break
     
         # continue game is keyword is guessed
-        if "_ " not in correct_in_order:
+        if "_ " not in correct_in_order or word_guess == keyword:
             print("You DId it!")
             
 
