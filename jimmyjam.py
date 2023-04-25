@@ -106,7 +106,27 @@ def display_gallows(wrong_guesses, keyword):
         print("|")
         # print("_ " * len(keyword))
 
-
+def show_incorrect(wrong_guesses):
+    if len(wrong_guesses) == 0:
+        print("Wrong Guesses:[]")
+        
+    elif len(wrong_guesses) == 1:
+        print(f"Wrong Guesses:[{wrong_guesses[0]}]")
+        
+    elif len(wrong_guesses) == 2:
+        print(f"Wrong Guesses:[{wrong_guesses[0]}, {wrong_guesses[1]}]")
+    
+    elif len(wrong_guesses) == 3:
+        print(f"Wrong Guesses:[{wrong_guesses[0]}, {wrong_guesses[1]}, {wrong_guesses[2]}]")
+        
+    elif len(wrong_guesses) == 4:
+        print(f"Wrong Guesses:[{wrong_guesses[0]}, {wrong_guesses[1]}, {wrong_guesses[2]}, {wrong_guesses[3]}]")
+        
+    elif len(wrong_guesses) == 5:
+        print(f"Wrong Guesses:[{wrong_guesses[0]}, {wrong_guesses[1]}, {wrong_guesses[2]}, {wrong_guesses[3]}, {wrong_guesses[4]}]")
+        
+    elif len(wrong_guesses) == 6:
+        print(f"Wrong Guesses:[{wrong_guesses[0]}, {wrong_guesses[1]}, {wrong_guesses[2]}, {wrong_guesses[3]}, {wrong_guesses[4]}, {wrong_guesses[5]}]")
 
 
 ######################################
@@ -150,7 +170,7 @@ def jimmyjam():
         time.sleep(1)
 
         print(
-            "Earlier today, Jimmy came up with an argument he thinks might sway the King to spare him, but he forgot hi argument!"
+            "Earlier today, Jimmy came up with an argument he thinks might sway the King to spare him, but he forgot his argument!"
         )
         print()
         time.sleep(3)
@@ -266,13 +286,15 @@ def jimmyjam():
                         break
     
                 # print()
-    
+                
+            # guess the word
             elif user_choice == "B":
                 print("You chose B")
                 print()
-    
+                
+            # see incorrect guesses
             elif user_choice == "C":
-                print("You chose C")
+                show_incorrect(wrong_guesses)
                 print()
     
             elif user_choice == "D":
@@ -293,7 +315,7 @@ def jimmyjam():
         if len(wrong_guesses) == 6:
             break
     
-        # break the loop if the dashes are filled in
+        # continue game is keyword is guessed
         if "_ " not in correct_in_order:
             print("You DId it!")
             
