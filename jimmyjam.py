@@ -21,13 +21,59 @@ def validate_choice_abcd(choice):
     else:
         print("Try again with a valid selection! (Y / N)")
         choice = input("> ").upper().strip()
-        
-#  def intro_1():
- 
- 
-        
 
-# correct letter guesses in hangman
+# Explain scenario ask if user wants to play
+def intro_1():
+    # INTRO
+    print()
+    print("Welcome to JIMMYJAM")
+    print("------------------")
+    print(
+        "At a royal party, Jimmy accidentally spilled wine on the King and embarrassed him, so Jimmy’s punishment is death. Jimmy would like your help to persuade the King to let him off with a warning."
+    )
+    print()
+    time.sleep(3)
+    print("Are you willing to help Jimmy? (Y / N)")
+    choice = input("> ").upper().strip()
+    # funnel choice through function to catch incorrect entries
+    choice = validate_choice_yn(choice)
+    return choice
+
+
+# Continue explaining scenario, ask for user name  
+def intro_2():
+    print()
+    print("Great!")
+    time.sleep(1)
+
+    # capture username
+    print("What can I call you?")
+    username = input("> ").upper().strip()
+    print()
+
+    print(
+        f"Oh, so you're {username}! Jimmy said you were best friends growing up. Great to meet you!"
+    )
+    print()
+    time.sleep(3)
+    print("Here's how you can help Jimmy...")
+    print()
+    time.sleep(1)
+
+    print(
+        "Earlier today, Jimmy came up with an argument he thinks might sway the King to spare him, but he forgot his argument!"
+    )
+    print()
+    time.sleep(3)
+    print(
+        "Help Jimmy jog his memory to remember his key point before its too late!!"
+    )
+    print()
+    time.sleep(2)
+    return username
+ 
+
+# Validates hangman letter
 def guess_again(guess, wrong_guesses, correct_guesses, letter_choices):
     while True:
 
@@ -45,6 +91,23 @@ def guess_again(guess, wrong_guesses, correct_guesses, letter_choices):
 
         else:
             return guess
+        
+# Hangman - if guess is in keyword       
+def letter_in_keyword(keyword, guess, correct_in_order, correct_guesses):
+    for i, letter in enumerate(keyword):
+        if letter == guess:
+            correct_in_order[i] = f"{guess} "
+
+            if letter not in correct_guesses:
+                correct_guesses.append(letter)
+    print("Correct!")
+                          
+def letter_not_in_keyword(guess, wrong_guesses, guess_count):
+    if guess not in wrong_guesses:
+        wrong_guesses.append(guess)
+    print("Incorrect...")
+    guess_count += 1
+    return guess_count               
 
 # print guessed letters and dashes on one line
 def guess_progress(correct_in_order):
@@ -133,57 +196,32 @@ def show_incorrect(wrong_guesses):
         print(f"Wrong Guesses:[{wrong_guesses[0]}, {wrong_guesses[1]}, {wrong_guesses[2]}, {wrong_guesses[3]}, {wrong_guesses[4]}, {wrong_guesses[5]}]")
 
 
+def validate_exit_game():
+    print("Are you sure you want to exit? (Y / N)")
+    choice = input("> ").upper().strip()
+    choice = validate_choice_yn(choice)
+    print()
+
+    if choice == "Y":
+        exit_game = True
+    elif choice == "N":
+        exit_game = False
+    return exit_game
+
 ######################################
 
 
 def jimmyjam():
     while True:
         # INTRO
-        print()
-        print("Welcome to JIMMYJAM")
-        print("------------------")
-        print(
-            "At a royal party, Jimmy accidentally spilled wine on the King and embarrassed him, so Jimmy’s punishment is death. Jimmy would like your help to persuade the King to let him off with a warning."
-        )
-        print()
-        time.sleep(3)
-        print("Are you willing to help Jimmy? (Y / N)")
-        choice = input("> ").upper().strip()
-        # funnel choice through function to catch incorrect entries
-        choice = validate_choice_yn(choice)
-
-        if choice == "N":
+        # explain scenario, ask if user wants to play
+        accept_challenge = intro_1()
+        if accept_challenge == "N":
             break
+        
+        # get username, continue explaining scenario 
+        username = intro_2()
 
-        print()
-        print("Great!")
-        time.sleep(1)
-
-        # capture username
-        print("What can I call you?")
-        username = input("> ").upper().strip()
-        print()
-
-        print(
-            f"Oh, so you're {username}! Jimmy said you were best friends growing up. Great to meet you!"
-        )
-        print()
-        time.sleep(3)
-        print("Here's how you can help Jimmy...")
-        print()
-        time.sleep(1)
-
-        print(
-            "Earlier today, Jimmy came up with an argument he thinks might sway the King to spare him, but he forgot his argument!"
-        )
-        print()
-        time.sleep(3)
-        print(
-            "Help Jimmy jog his memory to remember his key point before its too late!!"
-        )
-        print()
-        time.sleep(2)
-    
         # GAME SETUP
         guess_count = 0
         exit_game = False
@@ -243,13 +281,9 @@ def jimmyjam():
         while True:
     
             # break loop if jimmy is completely on the board
-            if guess_count == 6:
+            if (guess_count == 6) or ("_ " not in correct_in_order):
                 break
-    
-            # break the loop if the dashes are filled in
-            if "_ " not in correct_in_order:
-                break
-    
+
             print()
             print("What would you like to do?")
             print("[A] Guess a letter")
@@ -269,25 +303,14 @@ def jimmyjam():
     
                     if guess in keyword:
                         print()
-    
-                        for i, letter in enumerate(keyword):
-                            if letter == guess:
-                                # print(i, letter)
-                                correct_in_order[i] = f"{guess} "
-    
-                                if letter not in correct_guesses:
-                                    correct_guesses.append(letter)
-                        print("Correct!")
+                        letter_in_keyword(keyword, guess, correct_in_order, correct_guesses)
                         display_gallows(guess_count)
                         guess_progress(correct_in_order)
                         break
     
                     else:
                         print()
-                        if guess not in wrong_guesses:
-                            wrong_guesses.append(guess)
-                        print("Incorrect...")
-                        guess_count += 1
+                        guess_count = letter_not_in_keyword(guess, wrong_guesses, guess_count)
                         display_gallows(guess_count)
                         guess_progress(correct_in_order)
                         break
@@ -303,7 +326,7 @@ def jimmyjam():
                     break
                 else:
                     print()
-                    print("Sorry, that isn't correct")
+                    print(f"Sorry, {word_guess} isn't correct")
                     guess_count += 1
                     display_gallows(guess_count)
                     guess_progress(correct_in_order)
@@ -314,27 +337,21 @@ def jimmyjam():
                 print()
     
             elif user_choice == "D":
-                print("Are you sure you want to exit? (Y / N)")
-                choice = input("> ").upper().strip()
-                choice = validate_choice_yn(choice)
-                print()
-    
-                # ends game - second while loopyy
+                exit_game = validate_exit_game()
 
-                if choice == "Y":
-                    exit_game = True
+                if exit_game:
                     break
     
             else:
                 print("Try again with a valid selection")
                 print()
     
-        # end game - first while loop
+        # User loses hangman - jump to end of script to see if player wants to play again
         if guess_count == 6:
             print("You Lose!")
             exit_game == False
         
-        elif exit_game == True:
+        elif exit_game:
             break
         
         else:
@@ -349,10 +366,10 @@ def jimmyjam():
             time.sleep(2)
             print("Are you up for the challenge of persuading the King to let Jimmy go? (Y / N)")
             choice = input("> ").upper().strip()
-            print()
             choice = validate_choice_yn(choice)
             if choice == "N":
                 break
+            print()
             
             print("Great!")
             time.sleep(1)
