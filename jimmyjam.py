@@ -13,14 +13,19 @@ def validate_choice_yn(choice):
             print("Try again with a valid selection! (Y / N)")
             choice = input("> ").upper().strip()
 
-# correct ABCD shoices
-def calidate_choice_abcd(choice):
+# correct ABCD choices
+def validate_choice_abcd(choice):
     if (choice == "A") or (choice == "B") or (choice == "C") or (choice
                                                                  == "D"):
         return choice
     else:
         print("Try again with a valid selection! (Y / N)")
         choice = input("> ").upper().strip()
+        
+#  def intro_1():
+ 
+ 
+        
 
 # correct letter guesses in hangman
 def guess_again(guess, wrong_guesses, correct_guesses, letter_choices):
@@ -141,7 +146,7 @@ def jimmyjam():
             "At a royal party, Jimmy accidentally spilled wine on the King and embarrassed him, so Jimmy’s punishment is death. Jimmy would like your help to persuade the King to let him off with a warning."
         )
         print()
-        time.sleep(4)
+        time.sleep(3)
         print("Are you willing to help Jimmy? (Y / N)")
         choice = input("> ").upper().strip()
         # funnel choice through function to catch incorrect entries
@@ -181,6 +186,7 @@ def jimmyjam():
     
         # GAME SETUP
         guess_count = 0
+        exit_game = False
         correct_guesses = []
         wrong_guesses = []
         letter_choices = [
@@ -237,7 +243,7 @@ def jimmyjam():
         while True:
     
             # break loop if jimmy is completely on the board
-            if len(wrong_guesses) == 6:
+            if guess_count == 6:
                 break
     
             # break the loop if the dashes are filled in
@@ -296,6 +302,7 @@ def jimmyjam():
                 if word_guess == keyword:
                     break
                 else:
+                    print()
                     print("Sorry, that isn't correct")
                     guess_count += 1
                     display_gallows(guess_count)
@@ -312,9 +319,10 @@ def jimmyjam():
                 choice = validate_choice_yn(choice)
                 print()
     
-                # ends game - second while loopy
+                # ends game - second while loopyy
 
                 if choice == "Y":
+                    exit_game = True
                     break
     
             else:
@@ -323,14 +331,78 @@ def jimmyjam():
     
         # end game - first while loop
         if guess_count == 6:
+            print("You Lose!")
+            exit_game == False
+        
+        elif exit_game == True:
             break
-    
-        # continue game is keyword is guessed
-        if "_ " not in correct_in_order or word_guess == keyword:
-            print("You DId it!")
+        
+        else:
+            # CONTINUE
+            time.sleep(1)
+            print()
+            print(f"OF COURSE!! The king loves {keyword}, he declared the second Tuesday of every month a holiday in honor of {keyword} after all!")
+            print()
+            time.sleep(3)
+            print("Perhaps he will let Jimmy go if you can connect with him on a personal level and get creative with your approach...")
+            print()
+            time.sleep(2)
+            print("Are you up for the challenge of persuading the King to let Jimmy go? (Y / N)")
+            choice = input("> ").upper().strip()
+            print()
+            choice = validate_choice_yn(choice)
+            if choice == "N":
+                break
             
+            print("Great!")
+            time.sleep(1)
+            print("The castle is at the top of the hill, Jimmy is counting on you.")
+            print()
+            time.sleep(2)
+            print(f"Good luck {username}!")
+            print()
+            time.sleep(1)
+            print(". . . ")
+            time.sleep(1)
+            print()
+            
+            # PERSUADE THE KING
+            user_points = 3 # need 7 points to win
+            
+            print("You go to the castle")
+            time.sleep(1)
+            print("There is a long line of people waiting to see the King")
+            time.sleep(1)
+            print("What do you do?")
+            time.sleep(1)
+            print()
+            print("[A] Stand at the back of the line")
+            print("[B] Ask the gaurd to let you in")
+            print("[C] Bypass the gaurd and kick the door open")
+            print("[D] Exit game")
+            choice = input("> ").upper().strip()
+            validate_choice_abcd(choice)
+            
+            if choice == "A":
+                print("You wait in line for 2 hours")
+                
+            elif choice == "B":
+                print("You approach the gaurd")
+                
+            elif choice == "C":
+                print("You bypass the gaurd and kick the door open")
+                
+        # If user loses, offer to continue playing   
+        if exit_game == False:
+            print("Do You Want to play Again?")
+            choice = input("> ").upper().strip()
+            
+            if choice == "N":
+                break
+       
 
 jimmyjam()
+
 
 print()
 
