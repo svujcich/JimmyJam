@@ -1,26 +1,24 @@
 import random
 import time
 
-
-# Correct yes or no choices
-def validate_choice_yn(choice):
+# Correct choices with 2 options
+def validate_choice_2(a, b):
     while True:
-        # choice = input("> ").upper().strip()
-        if (choice == "Y") or (choice == "N"):
+        choice = input("> ").upper().strip()
+        if (choice == a) or (choice == b):
             return choice
+        else:
+            print(f"Try again with a valid selection! ({a} / {b})")
+    
 
-        if (choice != "Y") or (choice != "N"):
-            print("Try again with a valid selection! (Y / N)")
-            choice = input("> ").upper().strip()
-
-# correct ABCD choices
-def validate_choice_abcd(choice):
-    if (choice == "A") or (choice == "B") or (choice == "C") or (choice
-                                                                 == "D"):
+# Correct choices with 4 options
+def validate_choice_4(a, b, c, d):
+    choice = input("> ").upper().strip()
+    if (choice == a) or (choice == b) or (choice == c) or (choice == d):
         return choice
     else:
-        print("Try again with a valid selection! (Y / N)")
-        choice = input("> ").upper().strip()
+        print("Try again with a valid selection!")
+        
 
 # Explain scenario ask if user wants to play
 def intro_1():
@@ -34,45 +32,97 @@ def intro_1():
     print()
     time.sleep(3)
     print("Are you willing to help Jimmy? (Y / N)")
-    choice = input("> ").upper().strip()
-    # funnel choice through function to catch incorrect entries
-    choice = validate_choice_yn(choice)
+    choice = validate_choice_2("Y", "N")
     return choice
 
 
 # Continue explaining scenario, ask for user name  
 def intro_2():
     print()
+    
     print("Great!")
     time.sleep(1)
-
-    # capture username
+    
     print("What can I call you?")
     username = input("> ").upper().strip()
     print()
-
-    print(
-        f"Oh, so you're {username}! Jimmy said you were best friends growing up. Great to meet you!"
-    )
+    print(f"Oh, so you're {username}! Jimmy said you were best friends growing up. Great to meet you!")
     print()
     time.sleep(3)
+    
     print("Here's how you can help Jimmy...")
     print()
     time.sleep(1)
-
-    print(
-        "Earlier today, Jimmy came up with an argument he thinks might sway the King to spare him, but he forgot his argument!"
-    )
+    
+    print("Earlier today, Jimmy came up with an argument he thinks might sway the King to spare him, but he forgot his argument!")
     print()
     time.sleep(3)
-    print(
-        "Help Jimmy jog his memory to remember his key point before its too late!!"
-    )
+    
+    print("Help Jimmy jog his memory to remember his key point before its too late!!")
     print()
     time.sleep(2)
     return username
  
 
+def display_gallows(guess_count):
+    if guess_count == 0:
+        print("---------")
+        print("| /")
+        print("|/")
+        print("|")
+        print("|")
+        
+    elif guess_count == 1:
+        print("---------")
+        print("| /     O")
+        print("|/")
+        print("|")
+        print("|")        
+
+    elif guess_count == 2:
+        print("---------")
+        print("| /     O")
+        print("|/      |")
+        print("|")
+        print("|")      
+
+    elif guess_count == 3:
+        print("---------")
+        print("| /     O")
+        print("|/      |\\")
+        print("|")
+        print("|")
+        
+
+    elif guess_count == 4:
+        print("---------")
+        print("| /     O")
+        print("|/     /|\\")
+        print("|")
+        print("|")     
+
+    elif guess_count == 5:
+        print("---------")
+        print("| /     O")
+        print("|/     /|\\")
+        print("|        \\")
+        print("|")
+      
+    elif guess_count == 6:
+        print("---------")
+        print("| /     O")
+        print("|/     /|\\")
+        print("|      / \\")
+        print("|")
+    
+    
+# Print guessed letters and dashes on one line
+def guess_progress(correct_in_order):
+    print(correct_in_order[0], correct_in_order[1], correct_in_order[2], correct_in_order[3],\
+    correct_in_order[4], correct_in_order[5], correct_in_order[6], correct_in_order[7],\
+     correct_in_order[8], correct_in_order[9], correct_in_order[10], correct_in_order[11])
+  
+  
 # Validates hangman letter
 def guess_again(guess, wrong_guesses, correct_guesses, letter_choices):
     while True:
@@ -91,8 +141,9 @@ def guess_again(guess, wrong_guesses, correct_guesses, letter_choices):
 
         else:
             return guess
+    
         
-# Hangman - if guess is in keyword       
+# [A] Hangman - if letter is in keyword       
 def letter_in_keyword(keyword, guess, correct_in_order, correct_guesses):
     for i, letter in enumerate(keyword):
         if letter == guess:
@@ -101,78 +152,17 @@ def letter_in_keyword(keyword, guess, correct_in_order, correct_guesses):
             if letter not in correct_guesses:
                 correct_guesses.append(letter)
     print("Correct!")
-                          
+    
+    
+# [A] Hangman - if letter isn't in keyword                          
 def letter_not_in_keyword(guess, wrong_guesses, guess_count):
     if guess not in wrong_guesses:
         wrong_guesses.append(guess)
     print("Incorrect...")
     guess_count += 1
-    return guess_count               
-
-# print guessed letters and dashes on one line
-def guess_progress(correct_in_order):
-    print(correct_in_order[0], correct_in_order[1], correct_in_order[2], correct_in_order[3],\
-    correct_in_order[4], correct_in_order[5], correct_in_order[6], correct_in_order[7],\
-     correct_in_order[8], correct_in_order[9], correct_in_order[10], correct_in_order[11])
-
-
-def display_gallows(guess_count):
-    if guess_count == 0:
-        print("---------")
-        print("| /")
-        print("|/")
-        print("|")
-        print("|")
-        # print("_ " * len(keyword))
-
-    elif guess_count == 1:
-        print("---------")
-        print("| /     O")
-        print("|/")
-        print("|")
-        print("|")
-        # print("_ " * len(keyword))
-
-    elif guess_count == 2:
-        print("---------")
-        print("| /     O")
-        print("|/      |")
-        print("|")
-        print("|")
-        # print("_ " * len(keyword))
-
-    elif guess_count == 3:
-        print("---------")
-        print("| /     O")
-        print("|/      |\\")
-        print("|")
-        print("|")
-        # print("_ " * len(keyword))
-
-    elif guess_count == 4:
-        print("---------")
-        print("| /     O")
-        print("|/     /|\\")
-        print("|")
-        print("|")
-        # print("_ " * len(keyword))
-
-    elif guess_count == 5:
-        print("---------")
-        print("| /     O")
-        print("|/     /|\\")
-        print("|        \\")
-        print("|")
-        # print("_ " * len(keyword))
-
-    elif guess_count == 6:
-        print("---------")
-        print("| /     O")
-        print("|/     /|\\")
-        print("|      / \\")
-        print("|")
-        # print("_ " * len(keyword))
-
+    return guess_count     
+          
+# [C] Hangman - see incorrect guesses
 def show_incorrect(wrong_guesses):
     if len(wrong_guesses) == 0:
         print("Wrong Guesses:[]")
@@ -196,10 +186,94 @@ def show_incorrect(wrong_guesses):
         print(f"Wrong Guesses:[{wrong_guesses[0]}, {wrong_guesses[1]}, {wrong_guesses[2]}, {wrong_guesses[3]}, {wrong_guesses[4]}, {wrong_guesses[5]}]")
 
 
+# Check if user wants to continue playing after winning hangman
+def continue_1(keyword):
+    exit_game = False
+    print()
+    print(f"OF COURSE!! The king loves {keyword}, he declared the second Tuesday of every month a holiday in honor of {keyword} after all!")
+    print()
+    time.sleep(3)
+    print("Perhaps he will let Jimmy go if you can connect with him on a personal level and get creative with your approach...")
+    print()
+    time.sleep(2)
+    print("Are you up for the challenge of persuading the King to let Jimmy go? (Y / N)")
+    choice = validate_choice_2("Y","N")
+    print()
+    if choice == "N":
+        exit_game = True
+    return exit_game
+
+
+def continue_2(username):
+    print("Great!")
+    time.sleep(1)
+    print("The castle is at the top of the hill, Jimmy is counting on you.")
+    print()
+    time.sleep(2)
+    print(f"Good luck {username}!")
+    print()
+    time.sleep(1)
+    print(". . . ")
+    time.sleep(1)
+    print()
+    
+def wait_in_line(user_points):
+    print("You wait in line for 2 hours")
+    user_points -= 2
+    time.sleep(1)
+    print(". . ." )
+    time.sleep(1)
+    print("You reach the front of the line")
+    print()
+    time.sleep(1)
+    
+# demand gaurd introduces you to king
+def introduction(a, b, new_name):
+    gaurd_choice = random.randint(a, b)
+
+    if gaurd_choice >= 1:
+        print("GAURD: Very Well")
+        print("GAURD: From where did you travel?")
+        hometown = input("> ")
+        
+        grand_entry = ["","*Trumpets playing*", f"GAURD: Announcing {new_name} of {hometown}"]
+        for line in grand_entry:
+            print(line)
+    else:
+        gaurd_choice = "GAURD: Absolutely not, but the King will see you now."
+        return gaurd_choice
+                
+                
+def approach_gaurd(new_name):       
+    business = "I demand a royal introduction to the King"
+
+    print(f"{new_name}: I am {new_name} and {business}")
+    
+    noble_titles = ["KING", "QUEEN", "EMPEROR", "EMPRESS", "COUNT", "CPOUNTESS", "DUKE", "DUTCHESS", "PRINCE", "PRINCESS", "LORD", "LADY", "KNIGHT"]
+                    
+    for noble in noble_titles:
+        # if user name has noble title, 75% chance gaurd will announce user to the king
+        if noble in new_name:
+            gaurd_choice = introduction(0,3, "Sarah")
+            return gaurd_choice
+        
+        # otherwise 50% chance gaurd will introduce    
+        else:
+            gaurd_choice = introduction(0,1, "Sarah")
+            return gaurd_choice
+    print()
+    time.sleep(2)
+
+
+intro = approach_gaurd("Sarah")
+
+
+
+
+
 def validate_exit_game():
     print("Are you sure you want to exit? (Y / N)")
-    choice = input("> ").upper().strip()
-    choice = validate_choice_yn(choice)
+    choice = validate_choice_2("Y", "N")
     print()
 
     if choice == "Y":
@@ -207,6 +281,7 @@ def validate_exit_game():
     elif choice == "N":
         exit_game = False
     return exit_game
+
 
 ######################################
 
@@ -290,7 +365,7 @@ def jimmyjam():
             print("[B] Guess the word")
             print("[C] See incorrect guesses")
             print("[D] Exit Game")
-            user_choice = input("> ").upper().strip()
+            user_choice = validate_choice_4("A", "B", "C", "D")
     
             if user_choice == "A":
                 print("What letter do you guess?")
@@ -341,11 +416,7 @@ def jimmyjam():
 
                 if exit_game:
                     break
-    
-            else:
-                print("Try again with a valid selection")
-                print()
-    
+
         # User loses hangman - jump to end of script to see if player wants to play again
         if guess_count == 6:
             print("You Lose!")
@@ -356,39 +427,19 @@ def jimmyjam():
         
         else:
             # CONTINUE
-            time.sleep(1)
-            print()
-            print(f"OF COURSE!! The king loves {keyword}, he declared the second Tuesday of every month a holiday in honor of {keyword} after all!")
-            print()
-            time.sleep(3)
-            print("Perhaps he will let Jimmy go if you can connect with him on a personal level and get creative with your approach...")
-            print()
-            time.sleep(2)
-            print("Are you up for the challenge of persuading the King to let Jimmy go? (Y / N)")
-            choice = input("> ").upper().strip()
-            choice = validate_choice_yn(choice)
-            if choice == "N":
+            # Reveal keyword was guessed, ask player if they want to continue, if not break loop
+            exit_game = continue_1(keyword)
+            if exit_game:
                 break
-            print()
-            
-            print("Great!")
-            time.sleep(1)
-            print("The castle is at the top of the hill, Jimmy is counting on you.")
-            print()
-            time.sleep(2)
-            print(f"Good luck {username}!")
-            print()
-            time.sleep(1)
-            print(". . . ")
-            time.sleep(1)
-            print()
-            
+            continue_2(username)
+
             # PERSUADE THE KING
             user_points = 3 # need 7 points to win
             
             print("You go to the castle")
             time.sleep(1)
             print("There is a long line of people waiting to see the King")
+            print()
             time.sleep(1)
             print("What do you do?")
             time.sleep(1)
@@ -397,28 +448,84 @@ def jimmyjam():
             print("[B] Ask the gaurd to let you in")
             print("[C] Bypass the gaurd and kick the door open")
             print("[D] Exit game")
-            choice = input("> ").upper().strip()
-            validate_choice_abcd(choice)
+            choice = validate_choice_4("A", "B", "C", "D")
             
             if choice == "A":
-                print("You wait in line for 2 hours")
+                user_points = wait_in_line(user_points)
+                
+                print("GAURD: State your business?")
+                print()
+                print("What do you do?")
+                print("[A] Tell him your real name")
+                print("[B] Give him an alias")
+                new_name = validate_choice_2("A", "B")
+                if new_name == "A":
+                    new_name = username
+                else:
+                    print("What is your alias?")
+                    new_name = input("> ").upper().strip()
+                print()
+                print("Then What?")
+                print("[A] Tell the gaurd you are here to see the King")
+                print("[B] Demand an introduction")
+                business = validate_choice_2("A", "B")
+                
+                # if business == "A":
+                #     statement = f"I am here to see the King. Its urgent."
+                #     gaurd_choice = "GAURD: Very Well."
+                    
+                # elif business == "B":
+                #     business == f"{new_name}I demand a royal introduction to the King"
+                    
+                #     noble_titles = ["KING", "QUEEN", "EMPEROR", "EMPRESS", "COUNT", "CPOUNTESS", "DUKE", "DUTCHESS", "PRINCE", "PRINCESS", "LORD", "LADY", "KNIGHT"]
+                                  
+                #     for noble in noble_titles:
+                #         # if user name has noble title, 75% chance gaurd will announce user to the king
+                #         if noble in new_name:
+                #             gaurd_choice = random.randint(0,3)
+            
+                #             if gaurd_choice >= 1:
+                #                 print("GAURD: Very Well")
+                #                 print("GAURD: From where did you travel?")
+                #                 hometown = input("> ")
+                                
+                #                 gaurd_choice = [f"*Trumpets playing*\
+                #                                 GAURD: Announcing {new_name} of {hometown}"]
+                #         else:
+                #             gaurd_choice = "GAURD: Absolutely not, but the King will see you now."
+                              
+                # print()
+                # print(f"{new_name}: I am {new_name} and {statement}")
+                # print()
+                # time.sleep(2)
+                # print(gaurd_choice)
+ 
+ 
                 
             elif choice == "B":
                 print("You approach the gaurd")
+                print("GAURD")
                 
             elif choice == "C":
                 print("You bypass the gaurd and kick the door open")
                 
+            elif choice == "D":
+                exit_game = validate_exit_game()
+
+                if exit_game:
+                    break
+                
+                
         # If user loses, offer to continue playing   
         if exit_game == False:
-            print("Do You Want to play Again?")
-            choice = input("> ").upper().strip()
+            print("Do You Want to play Again? (Y / N)")
+            choice = validate_choice_2("Y", "N")
             
             if choice == "N":
                 break
        
 
-jimmyjam()
+# jimmyjam()
 
 
 print()
