@@ -23,9 +23,9 @@ def validate_choice_4(a, b, c, d):
  
 def thinking():
     print()
-    time.sleep(1)
+    time.sleep(2)
     print(". . .")
-    time.sleep(1)
+    time.sleep(2)
     print()
            
 
@@ -37,7 +37,7 @@ def intro_1():
     print("------------------")
     print("At a royal party, Jimmy accidentally spilled wine on the King and embarrassed him, so Jimmy’s punishment is death. Jimmy would like your help to persuade the King to let him off with a warning.")
     print()
-    time.sleep(3)
+    time.sleep(1)
     print("Are you willing to help Jimmy? (Y / N)")
     choice = validate_choice_2("Y", "N")
     return choice
@@ -53,16 +53,16 @@ def intro_2():
     print()
     print(f"Oh, so you're {username}! Jimmy said you were best friends growing up. Great to meet you!")
     print()
-    time.sleep(3)
+    time.sleep(2)
     print("Here's how you can help Jimmy...")
     print()
     time.sleep(1)
     print("Earlier today, Jimmy came up with an argument he thinks might sway the King to spare him, but he forgot his argument!")
     print()
-    time.sleep(3)
+    time.sleep(1)
     print("Help Jimmy jog his memory to remember his key point before its too late!!")
     print()
-    time.sleep(2)
+    time.sleep(1)
     return username
  
 
@@ -163,6 +163,7 @@ def letter_not_in_keyword(guess, wrong_guesses, guess_count):
     print("Incorrect...")
     guess_count += 1
     return guess_count     
+     
           
 # [C] Hangman - see incorrect guesses
 def show_incorrect(wrong_guesses):
@@ -206,6 +207,7 @@ def continue_1(keyword):
         exit_game = True
     return exit_game
 
+
 def continue_2(username):
     print("Great!")
     time.sleep(1)
@@ -219,6 +221,7 @@ def continue_2(username):
     time.sleep(1)
     print()
     
+    
 def continue_3():
     print("You go to the castle")
     time.sleep(1)
@@ -226,17 +229,13 @@ def continue_3():
     print()
     time.sleep(1) 
  
+ 
 # show adding and subtracting points 
 def score(points, user_points):
     print(f"{points} points")
     print(f"Score: {user_points}")
   
-# #to include on menu options 
-# def score_overview(user_points):
-#     print(f"Score: {user_points}")
-#     print("You need 7 points to win")
-      
-
+  
 def gaurd_menu(user_points):
     continue_3()
     print("What do you do?")
@@ -324,7 +323,7 @@ def introduction(a, b, new_name, user_points):
         return user_points
                 
 # Choose: ask to see king / demand intro
-def approach_gaurd(new_name, user_points):
+def approach_gaurd(new_name, user_points,username):
     
     print()
     time.sleep(1)
@@ -339,7 +338,7 @@ def approach_gaurd(new_name, user_points):
         business = "I demand a royal introduction to the King"
 
         print()
-        print(f"{new_name}: I am {new_name} and {business}")
+        print(f"{username}: I am {new_name} and {business}")
 
         noble_titles = ["KING", "QUEEN", "EMPEROR", "EMPRESS", "COUNT", "CPOUNTESS", "DUKE", "DUTCHESS", "PRINCE", "PRINCESS", "LORD", "LADY", "KNIGHT"]
         noble_name = False 
@@ -362,7 +361,7 @@ def approach_gaurd(new_name, user_points):
         business = "I am here to see the King. It's urgent!"
         # no points awarded
         print()
-        print(f"{new_name}: I am {new_name} and {business}")
+        print(f"{username}: I am {new_name} and {business}")
         thinking()
         print("GAURD: Very Well")
         time.sleep(1)
@@ -375,12 +374,12 @@ def approach_gaurd(new_name, user_points):
 
 
 # Greet the King
-def bow_dramatically(user_points, new_name):
+def bow_dramatically(user_points, new_name, username):
     user_points += 1
     print()
     print("*Bowing Dramatically on hands and knees*")
     time.sleep(1)
-    print(f"{new_name}: My name is {new_name} his majesty")
+    print(f"{username}: My name is {new_name} his majesty")
     time.sleep(1)
     print("I am humbled to be in your presence")
     print()
@@ -389,25 +388,27 @@ def bow_dramatically(user_points, new_name):
     score("+1", user_points) 
     return user_points
  
-def quick_bow(user_points, new_name):
+ 
+def quick_bow(user_points, new_name, username):
     user_points -= 1
     print()
     print("You preform a quick bow")
     time.sleep(1)
-    print(f"{new_name}: His majesty, my name is {new_name}, thank you for seeing me. ")
+    print(f"{username}: His majesty, my name is {new_name}, thank you for seeing me. ")
     print()
     time.sleep(1)
     print("The King is unimpressed")
     score("-1", user_points)
     return user_points
 
-def handshake(user_points, new_name):
+
+def handshake(user_points, new_name, username):
     user_points -= 2
     print
     print("You approach the King and offer a handshake")
     print()
     time.sleep(1)
-    print(f"{new_name}: Hello sir, I am {new_name}, charmed.")
+    print(f"{username}: Hello sir, I am {new_name}, charmed.")
     print()
     time.sleep(1)
     print("KING: How dare you!")
@@ -418,20 +419,20 @@ def handshake(user_points, new_name):
 
      
 # Talk with King - appologize/ compliment: print an appology, calculate user points
-def chit_chat(strategy, position, keyword, user_points):
+def chit_chat(strategy, position, keyword, user_points, username):
 
     # appology, points awarded, king response
     discussion_appology = [
-        ["As you may recall, a man named JIMMY spilled wine on you. Please accept my most appology on his behalf.", -2, "The King recalls how embarrased he was and scoffs"],
-        ["Your majesty, I cannot express how sorry I am about the wine incident, please have mercy.", 1, "The King feels compassion for the humble appology"],
-        ["The remorse in my heart for your soiled garbs is insufferanle, please spare the life of JIMMY.", -1, "The King appears annoyed at the repeated appologies"],
+        [f"{username}: As you may recall, a man named JIMMY spilled wine on you. Please accept my most appology on his behalf.", -2, "The King recalls how embarrased he was and scoffs"],
+        [f"{username}: Your majesty, I cannot express how sorry I am about the wine incident, please have mercy.", 1, "The King feels compassion for the humble appology"],
+        [f"{username}:The remorse in my heart for your soiled garbs is insufferanle, please spare the life of JIMMY.", -1, "The King appears annoyed at the repeated appologies"],
         [f"Your pain must feel as unbarable as having the joy of {keyword} removed from your heart",3, f"The King suddenly has an overwhelming sense of joy in thinking about {keyword}"]
     ]
     discussion_compliment = [        
-        ["Might I just say, what a gracious and merciful ruler you are, my lord. You radiate compassion, such that people of even the smallest of offenses, say, my friend JIMMY who spilled wine in your presence would repent for their actions. What a benevolent ruler you are!", 1, "The king wears your compliment with great pride"],
-        ["Might I also add how I admire the look of your crown atop your head. My friend JIMMY would agree, he has said many times how very becoming of you, my lord", 1, "The King feels especially good about himself"],
-        ["Your nose, his majesty, is as beautiful as the mountains", -2, "The King (who hates mountains) takes it as an insult"],
-        ["I meant not to offend you while commenting on your nose, what I meant was you wear it as majestically as this town wears its {keyword} holiday held the second Tuesday of every month!", 3, "The King agrees his idea for a monthly {keyword} holiday is his greatest achievement as ruler to date!"]
+        [f"{username}: Might I just say, what a gracious and merciful ruler you are, my lord. You radiate compassion, such that people of even the smallest of offenses, say, my friend JIMMY who spilled wine in your presence would repent for their actions. What a benevolent ruler you are!", 1, "The king wears your compliment with great pride"],
+        [f"{username}: Might I also add how I admire the look of your crown atop your head. My friend JIMMY would agree, he has said many times how very becoming of you, my lord", 1, "The King feels especially good about himself"],
+        [f"{username}: Your nose, his majesty, is as beautiful as the mountains", -2, "The King (who hates mountains) takes it as an insult"],
+        [f"{username}: I meant not to offend you while commenting on your nose, what I meant was you wear it as majestically as this town wears its {keyword} holiday held the second Tuesday of every month!", 3, f"The King agrees his idea for a monthly {keyword} holiday is his greatest achievement as ruler to date!"]
     ]
     
     # decide which dictionary to use
@@ -462,13 +463,68 @@ def chit_chat(strategy, position, keyword, user_points):
     print()
     
     return user_points
-   
+ 
+ 
+def pitch_bluff(username):
+    print()
+    print(f"{username}: My lord . . .")
+    time.sleep(1)
+    print(f"{username}: Jimmy, the man who is about to hang is a SCIENTIST, and I am his Apprentice")
+    time.sleep(1)
+    print(f"{username}: The world is ending, there isn't much time")
+    thinking()
+       
+# king only calls you Dr. if he believes your bluff      
+def dr_username(new_name, username, points): 
+    # check if username already has a DR. prefix
+    for prefix in username:
+        if username[0] + username[1] + username[2] == "DR.":
+            prefix = True
+        else:
+            prefix = False
+        
+    if prefix == True:
+        print()
+        print(f"{username}Please his majesty, call me {new_name}")
+        print()
+        time.sleep(1)
+        print("KING: Am I not already . . . ?")
+        time.sleep(1)
+        return new_name
+    else:
+        
+        if points >= 1:
+            if "DR." not in new_name:
+                new_name = f"DR. {new_name}" 
+            print()
+            print(f"{username}: Please his majesty, call me {new_name}")
+            print()
+            time.sleep(1)
+            print(f"KING: tell me more, {new_name}")
+            print()
+            time.sleep(1)
+            return new_name
+        
+        else:
+            print()
+            print(f"{username}: Please his majesty, call me DR. {new_name}")
+            print()
+            time.sleep(1)
+            print(f"KING: Absolutely not.")
+            print()
+            time.sleep(1) 
+            return new_name
+        
+    
+ 
     
 def gamble(bluff, user_points):
     king_reactions = {
     "surprised": ["KING: Are you serious?! How!","Wow! I thought for sure we had taken care of that last week when the stars were about to fall from the heavens"],
     "unconvinced": ["I don't believe you", "What kind of fool do you take me for?!"]
     }
+    
+    userpoints_fooledking = []
     
     # decide 1 point or 3 point at stake
     if bluff == 0:
@@ -482,24 +538,59 @@ def gamble(bluff, user_points):
     # If king believed you - print statement, calculate score, display score, return score
     if rand_bluff == 1:
         print(king_reactions["surprised"][bluff])
+        print()
         time.sleep(1)
+        
         user_points += stakes
         str_score = f"+{stakes}"
         score(str_score, user_points)
-        print()
         time.sleep(1)            
-        return user_points
+        return stakes
     
     # If king thinks you're lying
     elif rand_bluff == 0:
         stakes = -stakes
         print(king_reactions["unconvinced"][bluff])
-        time.sleep(1)
-        user_points += stakes
-        score(stakes, user_points)
         print()
+        time.sleep(1)
+        
+        user_points += stakes
+        userpoints_fooledking.append(user_points)        
+        
+        score(stakes, user_points)
         time.sleep(1)            
-        return user_points
+        return stakes
+    
+    
+def change_subject(username):
+    print()
+    print(f"{username}: Well you see I . . . ")
+    time.sleep(1)
+    print(f"*looks out the window*")
+    time.sleep(1)
+    print(f"{username}: Wow! was that a dragon?!")
+    time.sleep(1)
+    print (f"{username}: Those things just keep coming back don't they!")
+    time.sleep(1)
+    print(f"{username}: Anyways")
+    time.sleep(1)
+    print(f"{username}: What I was saying was . . . ")
+    print()
+    
+    
+def win_script(new_name):
+    print("KING: I suppose I could let the wine fellow go this time")
+    time.sleep(1)
+    print(f"KING: But it better not happen again {new_name}!")
+    time.sleep(1)
+    print("KING: Gaurds! Release JIMMY")
+    time.sleep(1)
+    print() 
+    print()
+    print("----------------------------")
+    print("CONGRATULATIONS!! YOU WON!!!")
+    print("----------------------------")
+    print()
  
  
 def validate_exit_game():
@@ -526,14 +617,13 @@ def jimmyjam():
     while True:
         # INTRO
         # explain scenario, ask if user wants to play
-        # accept_challenge = intro_1()
-        # if accept_challenge == "N":
-        #     break
+        accept_challenge = intro_1()
+        if accept_challenge == "N":
+            break
         
-        # # get username, continue explaining scenario 
-        # username = intro_2()
-        username = "SARAH"
-
+        # get username, continue explaining scenario 
+        username = intro_2()
+        
         # GAME SETUP
         guess_count = 0
         winner = False
@@ -548,7 +638,10 @@ def jimmyjam():
     
         # pick a random word for hangman
         keywords = [
-            "AUTUMN", "PUMPERNICKEL", "DUSTBUNNY", "PICKELFORK", "SWIMSUIT"
+            "AUTUMN", "PUMPERNICKEL", "CONFETTI", "RUGBY", "AUSTRAILA",
+            "YOGURT", "BOSTON", "GRANITE", "WOODWORKING", "TORTILLAS",
+            "CANADA", "PORK", "GEOCACHING", "AMSTERDAM", "MOLD", "GOUDA",
+            "UMPIRES", "LOGS", "HEADPHONES", "EDUCATION", "OHIO"
         ]
         selection = random.randint(0, len(keywords) - 1)
         keyword = keywords[selection]
@@ -596,7 +689,9 @@ def jimmyjam():
     
             # break loop if jimmy is completely on the board
             if (guess_count == 6):
-                loser == True
+                loser = True
+                print()
+                print(f"The word was {keyword}")
                 break
             elif ("_ " not in correct_in_order):
                 break
@@ -694,7 +789,7 @@ def jimmyjam():
                 new_name = change_name(username, "gaurd")
                 
                 # talk to gaurd
-                user_points = approach_gaurd(new_name, user_points)
+                user_points = approach_gaurd(new_name, user_points, username)
                 # print(user_points)
                 print()
             
@@ -704,7 +799,7 @@ def jimmyjam():
                 time.sleep(1)
                 print()
                 new_name = change_name(username, "gaurd")
-                user_points = approach_gaurd(new_name, user_points)
+                user_points = approach_gaurd(new_name, user_points, username)
                 # print(user_points)
                 print()
                                 
@@ -741,13 +836,13 @@ def jimmyjam():
                 greeting = validate_choice_4("A", "B", "C", "D")
 
                 if greeting == "A":
-                    user_points = bow_dramatically(user_points, new_name)
+                    user_points = bow_dramatically(user_points, new_name, username)
 
                 elif greeting == "B":
-                    user_points = quick_bow(user_points, new_name)
+                    user_points = quick_bow(user_points, new_name, username)
                     
                 elif greeting == "C":
-                    user_points = handshake(user_points, new_name)
+                    user_points = handshake(user_points, new_name, username)
                     
                 elif choice == "D":
                     exit_game = validate_exit_game()
@@ -767,12 +862,11 @@ def jimmyjam():
                 time.sleep(1)
                 break
             
-            while True:
-                if loser == True:
-                  break  
-                
+            while True: 
+                            
                 if user_points <= 0:
-                    break 
+                    loser = True
+                    break   
                 
                 if user_points >= 7:
                     winner = True
@@ -787,33 +881,29 @@ def jimmyjam():
                 
                 if strategy == "A":
                     strategy = "appology"
-                    user_points = chit_chat(strategy, appology, keyword, user_points)
+                    user_points = chit_chat(strategy, appology, keyword, user_points, username)
                     appology += 1  
                     
                     if appology > 3:
                         appology = 0
-                                 
-                        
+                                        
                 elif strategy == "B":
-                    print()
-                    print("My lord . . .")
-                    time.sleep(1)
-                    print("Jimmy, the man who is about to hang is a SCIENTIST, and I am his Apprentice")
-                    time.sleep(1)
-                    print("The world is ending, there isn't much time")
-                    time.sleep(1)
-                    thinking()
-                    time.sleep(1)
-                    user_points = gamble(bluff, user_points)
+                    pitch_bluff(username)
+                    points = gamble(bluff, user_points,)
+                    user_points += int(points)
+                    
                     bluff += 1
                     print()
                     time.sleep(1)
-                    
-                    
-                    
+
                     while True:
+                         
                         if user_points >= 7:
                             winner = True
+                            break
+                        
+                        if user_points <= 0:
+                            loser = True
                             break
                         
                         print("What do you do?")
@@ -824,29 +914,10 @@ def jimmyjam():
                         choice = validate_choice_4("A", "B", "C", "D")
                         
                         if choice == "A":
-                            if "DR." not in new_name:
-                                new_name = f"DR. {new_name}"
-                                print()
-                            print(f"Please his majesty, call me {new_name}")
-                            print()
-                            time.sleep(1)
-                            print(f"KING: tell me more, {new_name}")
-                            print()
-                            time.sleep(1)
-                                
+                            new_name = dr_username(new_name, username, points)
+
                         elif choice == "B":
-                            print(f"{new_name}: Well you see I . . . ")
-                            time.sleep(1)
-                            print(f"*looks out the window*")
-                            time.sleep(1)
-                            print(f"{new_name}: Wow! was that a dragon?!")
-                            time.sleep(1)
-                            print (f"{new_name}: Those things just keep coming back don't they!")
-                            time.sleep(1)
-                            print(f"{new_name}: Anyways")
-                            time.sleep(1)
-                            print(f"{new_name}: What I was saying was . . . ")
-                            print()
+                            change_subject(username)
                             # reset bluff
                             bluff = 0
                             time.sleep(1)
@@ -854,10 +925,10 @@ def jimmyjam():
                         
                         elif choice == "C":
                             print()
-                            print(f"{new_name}: Only Jimmy knows how to synthesize aluminun bicarbonate to power the geo-magnitron!")
-                            print()
-                            time.sleep(1)
-                            user_points = gamble(bluff, user_points)
+                            print(f"{username}: Only Jimmy knows how to synthesize aluminun bicarbonate to power the geo-magnitron!")
+                            thinking
+                            points = gamble(bluff, user_points)
+                            user_points += int(points)
                             if user_points <= 0:
                                 loser = True
                             # reset bluff 
@@ -870,10 +941,9 @@ def jimmyjam():
                             if exit_game:
                                 break
          
-
                 elif strategy == "C":
                     strategy = "compliment"
-                    user_points = chit_chat(strategy, compliment, keyword, user_points)
+                    user_points = chit_chat(strategy, compliment, keyword, user_points, username)
                     compliment += 1
                     
                     if compliment > 3:
@@ -884,32 +954,25 @@ def jimmyjam():
  
                 if exit_game == True:
                     break
-                
-               
+                        
         if exit_game == True:
             break
-        
-        ##################don't unindent       
-        # If user loses, offer to continue playing
+              
+        # offer to continue playing
         if winner == True:
-            print("KING: I suppose I could let the wine fellow go this time")
-            time.sleep(1)
-            print(f"KING: But it better not happen again {new_name}!")
-            time.sleep(1)
-            print("KING: Gaurds! Release JIMMY")
-            time.sleep(1)
-            print() 
-            print()
-            print("----------------------------")
-            print("CONGRATULATIONS!! YOU WON!!!")
-            print("----------------------------")
-            print()
+            win_script(new_name)
             choice = play_again()
             
             if choice == "N":
                 break
               
         if loser == True:
+            print()
+            print("KING: I've had enough.")
+            time.sleep(1)
+            print(f"KING: Gaurds! take {new_name} away!")
+            print()
+            time.sleep(1)
             print("You Lose!")
             print()
             choice = play_again()
@@ -923,14 +986,3 @@ jimmyjam()
 print()
 
 print("GAME OVER")
-        
-
-        
-    
-    
-    
-
-               
-
-
-
