@@ -423,7 +423,7 @@ def chit_chat(strategy, position, keyword, user_points, username):
 
     # appology, points awarded, king response
     discussion_appology = [
-        [f"{username}: As you may recall, a man named JIMMY spilled wine on you. Please accept my most appology on his behalf.", -2, "The King recalls how embarrased he was and scoffs"],
+        [f"{username}: As you may recall, a man named JIMMY spilled wine on you. Please accept my most humble appology on his behalf.", -2, "The King recalls how embarrased he was and scoffs"],
         [f"{username}: Your majesty, I cannot express how sorry I am about the wine incident, please have mercy.", 1, "The King feels compassion for the humble appology"],
         [f"{username}:The remorse in my heart for your soiled garbs is insufferanle, please spare the life of JIMMY.", -1, "The King appears annoyed at the repeated appologies"],
         [f"Your pain must feel as unbarable as having the joy of {keyword} removed from your heart",3, f"The King suddenly has an overwhelming sense of joy in thinking about {keyword}"]
@@ -579,6 +579,7 @@ def change_subject(username):
     
     
 def win_script(new_name):
+    print()
     print("KING: I suppose I could let the wine fellow go this time")
     time.sleep(1)
     print(f"KING: But it better not happen again {new_name}!")
@@ -926,7 +927,7 @@ def jimmyjam():
                         elif choice == "C":
                             print()
                             print(f"{username}: Only Jimmy knows how to synthesize aluminun bicarbonate to power the geo-magnitron!")
-                            thinking
+                            thinking()
                             points = gamble(bluff, user_points)
                             user_points += int(points)
                             if user_points <= 0:
@@ -965,8 +966,13 @@ def jimmyjam():
             
             if choice == "N":
                 break
+        
+        elif  loser == True and guess_count == 6:
+            choice = play_again()
+            if choice == "N":
+                break
               
-        if loser == True:
+        elif loser == True:
             print()
             print("KING: I've had enough.")
             time.sleep(1)
