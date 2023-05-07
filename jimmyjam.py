@@ -693,6 +693,7 @@ def jimmyjam():
                 loser = True
                 print()
                 print(f"The word was {keyword}")
+                print()
                 break
             elif ("_ " not in correct_in_order):
                 break
